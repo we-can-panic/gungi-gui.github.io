@@ -8,6 +8,8 @@ type
   Board* = object
     grid*: array[BoardWidth, array[BoardHeight, Cell]]
 
+  MoveType* = enum
+    Tsuke, Tori  # ツケ（置く）と取る
 
 # 初期駒配置を返す（必要に応じて編集）
 proc placeInitialPieces(): array[BoardWidth, array[BoardHeight, Cell] ] =
@@ -18,12 +20,12 @@ proc placeInitialPieces(): array[BoardWidth, array[BoardHeight, Cell] ] =
   # 例: 1列目に黒sui, 9列目に白suiを置く（実際の軍儀初期配置に合わせて修正可）
   var blackSui: PiecePtr
   new blackSui
-  blackSui[] = initPiece(sui, black, true)
+  blackSui[] = initPiece(sui, black)
   grid[4][0].pushPiece(blackSui)
 
   var whiteSui: PiecePtr
   new whiteSui
-  whiteSui[] = initPiece(sui, white, true)
+  whiteSui[] = initPiece(sui, white)
   grid[4][8].pushPiece(whiteSui)
   # 他の駒も必要に応じて配置
   return grid
@@ -37,6 +39,18 @@ proc getCell*(b: Board, x, y: int): Cell =
 proc setCell*(b: var Board, x, y: int, c: Cell) =
   b.grid[x][y] = c
 
+proc moveCell*(b: var Board, src: (int, int), dst: (int, int), moveType: MoveType) =
+  var srcCell = b.getCell(src[0], src[1])
+  var dstCell = b.getCell(dst[0], dst[1])
+  if moveType == Tsuke:
+    # ツケ処理: dstCellに駒がいる場合は上に積む
+    let movingPiece = srcCell.popPiece()
+    dstCell.pushPiece(movingPiece)
+    b.setCell(src[0], src[1], srcCell)
+    b.setCell(dst[0], dst[1], dstCell)
+  elif moveType == Tori:
+    # 取る処理（必要に応じて実装）
+    discard
 
 # 指定座標の駒の移動可能範囲（現状suiのみ: 上下左右1マス）
 proc getMovableCells*(b: Board, x, y: int): seq[(int, int)] =

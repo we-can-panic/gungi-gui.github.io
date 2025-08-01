@@ -8,7 +8,6 @@ type
   Piece* = object
     kind*: PieceType
     side*: Side
-    isAvailable*: bool # 最上段のみtrue
 
   PiecePtr* = ref Piece
 
@@ -16,8 +15,8 @@ type
     pieces*: array[3, PiecePtr] # 0:最下段, 2:最上段
     count*: int # 現在積まれている駒の数（0〜3）
 
-proc initPiece*(kind: PieceType, side: Side, isAvailable = true): Piece =
-  Piece(kind: kind, side: side, isAvailable: isAvailable)
+proc initPiece*(kind: PieceType, side: Side): Piece =
+  Piece(kind: kind, side: side)
 
 proc initCell*(): Cell =
   Cell(pieces: [nil, nil, nil], count: 0)
@@ -27,9 +26,6 @@ proc pushPiece*(c: var Cell, p: PiecePtr) =
   if c.count < 3:
     c.pieces[c.count] = p
     c.count += 1
-    # すべての駒のisAvailableをfalseにし、最上段だけtrue
-    for i in 0..<c.count:
-      c.pieces[i].isAvailable = (i == c.count-1)
 
 
 # Cellから駒を取り出す（最上段のみ）
@@ -38,8 +34,13 @@ proc popPiece*(c: var Cell): PiecePtr =
     result = c.pieces[c.count-1]
     c.pieces[c.count-1] = nil
     c.count -= 1
-    if c.count > 0:
-      c.pieces[c.count-1].isAvailable = true
+
+# 最上段の駒を取得（nilなら空）
+func getPiece*(c: Cell): PiecePtr =
+  if c.count > 0:
+    return c.pieces[c.count-1]
+  else:
+    return nil
 
 # 駒の移動パターンを返す（ツケの段数によって動きが変わる）
 # 戻り値は相対座標のリスト（例: [(-1,0), (1,0)] なら上下に1マス動ける）

@@ -2,46 +2,74 @@
 import karax / [vdom, karax, karaxdsl]
 import components/board as boardmod  # 盤面クラス（board.nim）
 import components/piece  # 駒クラス（piece.nim）
+import options
 
+type Cell = piece.Cell
 
 var board: boardmod.Board = boardmod.initBoard()
-# マウスオーバー中の駒座標（なければ(-1,-1)）
-
 var movableCells: seq[(int, int)] = @[]
+var selectedPos: Option[(int, int)] = none((int, int))
 
-# セル用マウスオーバー/アウト処理を関数で切り出し
+# セル用マウスオーバー/アウト処理
 proc onCellMouseOver(x, y: int, cell: Cell): proc() =
   return proc() =
-    if cell.count > 0 and cell.pieces[cell.count-1] != nil:
+    if selectedPos.isNone and cell.count > 0 and cell.pieces[cell.count-1] != nil:
       movableCells = board.getMovableCells(x, y)
       redraw()
 
 proc onCellMouseOut(x, y: int): proc() =
   return proc() =
-    movableCells = @[]
-    redraw()
+    if selectedPos.isNone:
+      movableCells = @[]
+      redraw()
+
+# セルクリック処理
+proc onCellClick(x, y: int, cell: Cell): proc() =
+  return proc() =
+    if selectedPos.isNone:
+      # 駒選択
+      if cell.count > 0 and cell.pieces[cell.count-1] != nil:
+        selectedPos = some((x, y))
+        movableCells = board.getMovableCells(x, y)
+        redraw()
+    else:
+      # 移動可能範囲なら移動
+      if movableCells.contains((x, y)):
+        board.moveCell(selectedPos.get(), (x, y), MoveType.Tsuke)
+      selectedPos = none((int, int))
+      movableCells = @[]
+      redraw()
 
 proc renderBoard(b: boardmod.Board): VNode =
   buildHtml(tdiv):
     for x in 0..<boardmod.BoardWidth:
       tr(class = "board"):
         for y in 0..<boardmod.BoardHeight:
-          let cell = board.getCell(x, y)
-          var label = ""
-          var sideClass = "white-side"
-          if cell.count > 0 and cell.pieces[cell.count-1] != nil:
-            label = $cell.pieces[cell.count-1].kind
-            if cell.pieces[cell.count-1].side == black:
-              sideClass = "black-side"
-          # 移動可能範囲ならクラス追加
-          var movableClass = ""
-          for (mx, my) in movableCells:
-            if mx == x and my == y:
-              movableClass = "movable"
-              break
-          td(class = "cell " & sideClass & (if movableClass != "": " " & movableClass else: ""),
+          let
+            cell = board.getCell(x, y)
+            piece = cell.getPiece()
+            label = block:
+              if piece != nil:
+                $piece.kind
+              else:
+                ""
+            sideClass = block:
+              if piece != nil:
+                if piece.side == black:
+                  " black-side "
+                else:
+                  " white-side "
+              else:
+                ""
+            movableClass = block:
+              if (x, y) in movableCells:
+                " movable "
+              else:
+                ""
+          td(class = "cell " & sideClass & movableClass,
             onMouseOver = onCellMouseOver(x, y, cell),
-            onMouseOut = onCellMouseOut(x, y)
+            onMouseOut = onCellMouseOut(x, y),
+            onClick = onCellClick(x, y, cell)
           ):
             text label
 
