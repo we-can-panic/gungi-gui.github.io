@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "metaData": {
+    "url": "https://github.com/euantorano/dotenv.nim",
+    "downloadMethod": "git",
+    "vcsRevision": "a3c6726147276ea1447dee292fd27bb036242b78",
+    "files": [
+      "\\dotenv.nim",
+      "\\dotenv.nimble"
+    ],
+    "binaries": [],
+    "specialVersions": [
+      "2.0.2"
+    ]
+  }
+}

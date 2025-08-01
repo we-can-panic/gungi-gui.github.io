@@ -1,0 +1,23 @@
+
+.board {
+    border-collapse: collapse;
+}
+.cell {
+    border: 1px solid black;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+}
+.cell.black-side {
+    background: #222;
+    color: #fff;
+}
+.cell.white-side {
+    background: #fff;
+    color: #111;
+}
+
+.movable {
+    background: rgb(98, 189, 255) !important;
+}

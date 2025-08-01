@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "reverseDeps": {
+    "ws": {
+      "0.5.0": {
+        "ae4daf4ae302d0431f3c2d385ae9d2fe767a3246": [
+          {
+            "name": "karax",
+            "version": "1.5.0",
+            "checksum": "58dfc7a459d631d0416b3dd43609ce6bc4b96c92"
+          }
+        ]
+      }
+    },
+    "dotenv": {
+      "2.0.2": {
+        "1e70fc63c286ca3da7592d61dbe501fcea35bc72": [
+          {
+            "name": "karax",
+            "version": "1.5.0",
+            "checksum": "58dfc7a459d631d0416b3dd43609ce6bc4b96c92"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,2 @@
+@chcp 65001 > nul
+@"%~dp0\..\pkgs2\karax-1.5.0-58dfc7a459d631d0416b3dd43609ce6bc4b96c92\karax\tools\karun.exe" %*
