@@ -1,6 +1,5 @@
 
 import karax / [vdom, karax, karaxdsl]
-import jsffi  # confirm用
 import components/board as boardmod  # 盤面クラス（board.nim）
 import components/piece  # 駒クラス（piece.nim）
 import options
@@ -56,6 +55,11 @@ proc onCellClick(x, y: int, cell: Cell): proc() =
           board.moveCell((sx, sy), (x, y), MoveType.Tori)
       selectedPos = none((int, int))
       movableCells = @[]
+      for x in 0..<BoardWidth:
+        for y in 0..<BoardHeight:
+          let cell = board.getCell(x, y)
+          if cell.count > 0:
+              echo $x & ", " & $y & ": " & $cell
       redraw()
 
 proc renderBoard(b: boardmod.Board): VNode =
@@ -91,8 +95,34 @@ proc renderBoard(b: boardmod.Board): VNode =
           ):
             text label
 
+
+# デバッグウインドウ
+proc renderDebug(): VNode =
+  buildHtml(tdiv(class = "debug-window")):
+    h3: text "[DEBUG]"
+    tdiv:
+      text "movableCells: " & $movableCells
+    tdiv:
+      text "selectedPos: " & $selectedPos
+    tdiv:
+      text "mochigoma[black]: " & $board.mochigoma[black].len & "個"
+    tdiv:
+      text "mochigoma[white]: " & $board.mochigoma[white].len & "個"
+    tdiv:
+      for x in 0..<boardmod.BoardWidth:
+        for y in 0..<boardmod.BoardHeight:
+          let cell = board.getCell(x, y)
+          if cell.count > 0:
+            tdiv:
+              text $x & ", " & $y & ": " & $cell
+
+
 proc app(): VNode =
+  # 初期配置をセット
+  board.grid = boardmod.placeInitialPieces()
+  board.mochigoma = boardmod.placeInitialMochigoma()
   result = buildHtml(tdiv):
+    renderDebug()
     h1:
       text "軍儀 GUI"
     tdiv:

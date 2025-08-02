@@ -55,10 +55,11 @@ suite "Board module tests":
 
   test "moveCell Tsuke adds piece to top of stack":
     var b = initBoard()
+
     var srcCell = b.getCell(0, 0)
-    let piece = newPiece(PieceType.sui, Side.black)
-    srcCell.pushPiece(piece)
+    srcCell.pushPiece(newPiece(PieceType.sui, Side.black))
     b.setCell(0, 0, srcCell)
+
     var dstCell = b.getCell(1, 1)
     dstCell.pushPiece(newPiece(PieceType.taisho, Side.white))
     b.setCell(1, 1, dstCell)
@@ -68,11 +69,15 @@ suite "Board module tests":
     let updatedSrcCell = b.getCell(0, 0)
     let updatedDstCell = b.getCell(1, 1)
     
-    check updatedSrcCell.count == 0
-    check updatedDstCell.count == 2
-    check updatedDstCell.pieces[1] != nil
-    check updatedDstCell.pieces[1].kind == PieceType.sui
-    check updatedDstCell.pieces[1].side == Side.black
+    b.setCell(0, 0, updatedSrcCell)
+    b.setCell(1, 1, updatedDstCell)
+
+    
+    check b.getCell(0, 0).count == 0
+    check b.getCell(1, 1).count == 2
+    check b.getCell(1, 1).pieces[1] != nil
+    check b.getCell(1, 1).pieces[1].kind == PieceType.sui
+    check b.getCell(1, 1).pieces[1].side == Side.black
 
   test "deletePiecesAt removes pieces of specified side":
     var b = initBoard()

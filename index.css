@@ -21,3 +21,17 @@
 .movable {
     background: rgb(98, 189, 255) !important;
 }
+
+.debug-window {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: #fff;
+    color: #222;
+    border: 1px solid #888;
+    z-index: 1000;
+    font-size: 12px;
+    padding: 6px;
+    min-width: 220px;
+    opacity: 0.95;
+}

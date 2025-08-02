@@ -105,3 +105,8 @@ proc getMovePattern*(kind: PieceType, stackLevel: int): seq[(int, int)] =
   else:
     # 他の駒は動きがない（例: shosho, samurai, yari, uma, shinobi, toride, hyou, hou, yumi, tsutsu, bou）
     result = @[]
+
+
+func `$`*(p: PiecePtr): string =
+  # 駒の文字列表現
+  $p.kind & " " & $p.side
