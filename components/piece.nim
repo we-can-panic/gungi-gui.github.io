@@ -42,6 +42,19 @@ func getPiece*(c: Cell): PiecePtr =
   else:
     return nil
 
+func deletePiecesAt*(c: var Cell, side: Side) =
+  # 指定した側の駒を全て削除
+  for i in 0..<c.count:
+    if c.pieces[i] != nil and c.pieces[i].side == side:
+      c.pieces[i] = nil
+  # 残りの駒を詰める
+  var newCount = 0
+  for i in 0..<c.count:
+    if c.pieces[i] != nil:
+      c.pieces[newCount] = c.pieces[i]
+      newCount += 1
+  c.count = newCount
+
 # 駒の移動パターンを返す（ツケの段数によって動きが変わる）
 # 戻り値は相対座標のリスト（例: [(-1,0), (1,0)] なら上下に1マス動ける）
 proc getMovePattern*(kind: PieceType, stackLevel: int): seq[(int, int)] =

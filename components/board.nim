@@ -50,7 +50,15 @@ proc moveCell*(b: var Board, src: (int, int), dst: (int, int), moveType: MoveTyp
     b.setCell(dst[0], dst[1], dstCell)
   elif moveType == Tori:
     # 取る処理（必要に応じて実装）
-    discard
+    let movingPiece = srcCell.popPiece()
+    case movingPiece.side
+    of black:
+        dstCell.deletePiecesAt(white)  # 白の駒を削除
+    of white:
+        dstCell.deletePiecesAt(black)  # 黒の駒を削除
+    dstCell.pushPiece(movingPiece)
+    b.setCell(src[0], src[1], srcCell)
+    b.setCell(dst[0], dst[1], dstCell)
 
 # 指定座標の駒の移動可能範囲（現状suiのみ: 上下左右1マス）
 proc getMovableCells*(b: Board, x, y: int): seq[(int, int)] =
