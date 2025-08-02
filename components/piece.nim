@@ -110,3 +110,21 @@ proc getMovePattern*(kind: PieceType, stackLevel: int): seq[(int, int)] =
 func `$`*(p: PiecePtr): string =
   # 駒の文字列表現
   $p.kind & " " & $p.side
+
+func `$`*(k: PieceType): string =
+  # 駒の種類の文字列表現
+  case k
+  of sui: "帥"
+  of taisho: "大"
+  of chujo: "中"
+  of shosho: "少"
+  of samurai: "侍"
+  of yari: "槍"
+  of uma: "馬"
+  of shinobi: "忍"
+  of toride: "砦"
+  of hyou: "兵"
+  of hou: "砲"
+  of yumi: "弓"
+  of tsutsu: "筒"
+  of bou: "棒"
