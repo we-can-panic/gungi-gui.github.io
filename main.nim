@@ -62,8 +62,30 @@ proc onCellClick(x, y: int, cell: Cell): proc() =
               echo $x & ", " & $y & ": " & $cell
       redraw()
 
+proc renderMochigoma(side: Side): VNode =
+  let label = if side == black: "黒" else: "白"
+  let pieces = board.mochigoma[side]
+  const cols = 4
+  const rows = 6
+  buildHtml(tdiv(class = "mochigoma-frame ")):
+    tdiv(class = "mochigoma-label"):
+      text label & " 持ち駒"
+    table(class = "mochigoma-list"):
+      for r in 0..<rows:
+        tr:
+          for c in 0..<cols:
+            let idx = r * cols + c
+            if idx < pieces.len:
+              let piece = pieces[idx]
+              td:
+                span(class = "mochigoma-piece " & (if side == black: "black-side" else: "white-side")):
+                  text $piece.kind
+            else:
+              td: text ""
+
 proc renderBoard(b: var boardmod.Board): VNode =
   buildHtml(tdiv):
+    # 盤面
     for x in 0..<boardmod.BoardWidth:
       tr(class = "board"):
         for y in 0..<boardmod.BoardHeight:
@@ -94,6 +116,10 @@ proc renderBoard(b: var boardmod.Board): VNode =
             onClick = onCellClick(x, y, cell)
           ):
             text label
+    # 持ち駒表示
+    tdiv(class = "mochigoma-container"):
+      renderMochigoma(black)
+      renderMochigoma(white)
 
 
 # デバッグウインドウ

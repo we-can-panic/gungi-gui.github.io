@@ -9,11 +9,11 @@
     text-align: center;
     vertical-align: middle;
 }
-.cell.black-side {
+.black-side {
     background: #222;
     color: #fff;
 }
-.cell.white-side {
+.white-side {
     background: #fff;
     color: #111;
 }
@@ -34,4 +34,43 @@
     padding: 6px;
     min-width: 220px;
     opacity: 0.95;
+}
+.mochigoma-container {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.mochigoma-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 32px;
+    min-width: 120px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    padding: 8px 12px;
+    background: #f8f8f8;
+}
+.mochigoma-label {
+    font-weight: bold;
+    margin-bottom: 4px;
+    font-size: 15px;
+}
+.mochigoma-list {
+    width: auto;
+    border-collapse: separate;
+}
+.mochigoma-piece {
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin: 2px auto;
+    text-align: center;
+    line-height: 24px;
+    border: 1px solid #888;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
 }

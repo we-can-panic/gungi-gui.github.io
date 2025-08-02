@@ -58,6 +58,19 @@ proc placeInitialMochigoma*(): array[Side, seq[PiecePtr]] =
   blackTaisho[] = initPiece(taisho, black)
   mochigoma[black].add(blackTaisho)
 
+  # 例: 黒の持ち駒として黒のchujoを1つ追加
+  var blackChujo: PiecePtr
+  new blackChujo
+  blackChujo[] = initPiece(chujo, black)
+  for i in 0..<10:
+    mochigoma[black].add(blackChujo)
+
+  # 例: 白の持ち駒として白のtaishoを1つ追加
+  var whiteTaisho: PiecePtr
+  new whiteTaisho
+  whiteTaisho[] = initPiece(taisho, white)
+  mochigoma[white].add(whiteTaisho)
+
   return mochigoma
 
 proc getCell*(b: Board, x, y: int): Cell =
