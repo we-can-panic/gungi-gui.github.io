@@ -100,7 +100,7 @@ proc getMovableCells*(b: Board, x, y: int): seq[(int, int)] =
       var ny = y + dy
       while nx in 0..<BoardWidth and ny in 0..<BoardHeight:
         let targetCell = b.grid[nx][ny]
-        if targetCell.count == 0:
+        if targetCell.count == 0 or targetCell.pieces[targetCell.count-1].side != piece.side:
           result.add((nx, ny))
         else:
           break  # 自分の駒があったらここで終了

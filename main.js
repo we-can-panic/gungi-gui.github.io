@@ -4875,7 +4875,7 @@ function getMovableCells_1191182522(b_1191182523, x_1191182524, y_1191182525) {
                   if (!(contains_1191182597(HEX2EHEX2E_956301360(0, 8), nx_1191182582) && contains_1191182597(HEX2EHEX2E_956301360(0, 8), ny_1191182583))) break Label6;
                     F.line = 102;
                     var targetCell_1191182623 = nimCopy(null, b_1191182523.grid[chckIndx(nx_1191182582, 0, (b_1191182523.grid).length - 1)][chckIndx(ny_1191182583, 0, (b_1191182523.grid[chckIndx(nx_1191182582, 0, (b_1191182523.grid).length - 1)]).length - 1)], NTI1207959559);
-                    if ((targetCell_1191182623.count == 0)) {
+                    if (((targetCell_1191182623.count == 0) || !((targetCell_1191182623.pieces[chckIndx(subInt(targetCell_1191182623.count, 1), 0, (targetCell_1191182623.pieces).length - 1)].side == piece_1191182536.side)))) {
                     F.line = 104;
                     result_1191182526.push({Field0: nx_1191182582, Field1: ny_1191182583});;
                     }
@@ -4904,9 +4904,9 @@ function getMovableCells_1191182522(b_1191182523, x_1191182524, y_1191182525) {
       Label7: {
         F.line = 110;
         F.filename = "board.nim";
-        var dx_1191182640 = 0;
+        var dx_1191182644 = 0;
         F.line = 110;
-        var dy_1191182641 = 0;
+        var dy_1191182645 = 0;
         F.line = 38;
         F.filename = "iterators.nim";
         var i_520094541 = 0;
@@ -4918,16 +4918,16 @@ function getMovableCells_1191182522(b_1191182523, x_1191182524, y_1191182525) {
               F.filename = "board.nim";
               var colontmp__520094544 = nimCopy(null, (Temporary10 = [{Field0: (-1), Field1: (-1)}, {Field0: (-1), Field1: 1}, {Field0: 1, Field1: (-1)}, {Field0: 1, Field1: 1}], Temporary10)[chckIndx(i_520094541, 0, (Temporary10).length - 1)], NTI1191182527);
               F.line = 110;
-              dx_1191182640 = colontmp__520094544["Field0"];
+              dx_1191182644 = colontmp__520094544["Field0"];
               F.line = 110;
-              dy_1191182641 = colontmp__520094544["Field1"];
+              dy_1191182645 = colontmp__520094544["Field1"];
               F.line = 111;
-              var nx_1191182642 = addInt(x_1191182524, dx_1191182640);
+              var nx_1191182646 = addInt(x_1191182524, dx_1191182644);
               F.line = 112;
-              var ny_1191182643 = addInt(y_1191182525, dy_1191182641);
-              if ((contains_1191182597(HEX2EHEX2E_956301360(0, 8), nx_1191182642) && contains_1191182597(HEX2EHEX2E_956301360(0, 8), ny_1191182643))) {
+              var ny_1191182647 = addInt(y_1191182525, dy_1191182645);
+              if ((contains_1191182597(HEX2EHEX2E_956301360(0, 8), nx_1191182646) && contains_1191182597(HEX2EHEX2E_956301360(0, 8), ny_1191182647))) {
               F.line = 114;
-              result_1191182526.push({Field0: nx_1191182642, Field1: ny_1191182643});;
+              result_1191182526.push({Field0: nx_1191182646, Field1: ny_1191182647});;
               }
               
               if ((3 <= i_520094541)) {
@@ -4946,9 +4946,9 @@ function getMovableCells_1191182522(b_1191182523, x_1191182524, y_1191182525) {
       Label11: {
         F.line = 116;
         F.filename = "board.nim";
-        var dx_1191182708 = 0;
+        var dx_1191182712 = 0;
         F.line = 116;
-        var dy_1191182709 = 0;
+        var dy_1191182713 = 0;
         F.line = 241;
         F.filename = "iterators.nim";
         var i_520094546 = 0;
@@ -4960,19 +4960,19 @@ function getMovableCells_1191182522(b_1191182523, x_1191182524, y_1191182525) {
             if (!(i_520094546 < L_520094547)) break Label13;
               F.line = 116;
               F.filename = "board.nim";
-              dx_1191182708 = piecerange_1191182537[chckIndx(i_520094546, 0, (piecerange_1191182537).length - 1)]["Field0"];
+              dx_1191182712 = piecerange_1191182537[chckIndx(i_520094546, 0, (piecerange_1191182537).length - 1)]["Field0"];
               F.line = 116;
-              dy_1191182709 = piecerange_1191182537[chckIndx(i_520094546, 0, (piecerange_1191182537).length - 1)]["Field1"];
+              dy_1191182713 = piecerange_1191182537[chckIndx(i_520094546, 0, (piecerange_1191182537).length - 1)]["Field1"];
               F.line = 117;
-              var nx_1191182710 = addInt(x_1191182524, dx_1191182708);
+              var nx_1191182714 = addInt(x_1191182524, dx_1191182712);
               F.line = 118;
-              var ny_1191182711 = addInt(y_1191182525, dy_1191182709);
-              if ((contains_1191182597(HEX2EHEX2E_956301360(0, 8), nx_1191182710) && contains_1191182597(HEX2EHEX2E_956301360(0, 8), ny_1191182711))) {
+              var ny_1191182715 = addInt(y_1191182525, dy_1191182713);
+              if ((contains_1191182597(HEX2EHEX2E_956301360(0, 8), nx_1191182714) && contains_1191182597(HEX2EHEX2E_956301360(0, 8), ny_1191182715))) {
               F.line = 121;
-              var targetCell_1191182750 = nimCopy(null, b_1191182523.grid[chckIndx(nx_1191182710, 0, (b_1191182523.grid).length - 1)][chckIndx(ny_1191182711, 0, (b_1191182523.grid[chckIndx(nx_1191182710, 0, (b_1191182523.grid).length - 1)]).length - 1)], NTI1207959559);
-              if ((((targetCell_1191182750.count == 0) || (targetCell_1191182750.pieces[chckIndx(subInt(targetCell_1191182750.count, 1), 0, (targetCell_1191182750.pieces).length - 1)] == null)) || !((targetCell_1191182750.pieces[chckIndx(subInt(targetCell_1191182750.count, 1), 0, (targetCell_1191182750.pieces).length - 1)].side == piece_1191182536.side)))) {
+              var targetCell_1191182754 = nimCopy(null, b_1191182523.grid[chckIndx(nx_1191182714, 0, (b_1191182523.grid).length - 1)][chckIndx(ny_1191182715, 0, (b_1191182523.grid[chckIndx(nx_1191182714, 0, (b_1191182523.grid).length - 1)]).length - 1)], NTI1207959559);
+              if ((((targetCell_1191182754.count == 0) || (targetCell_1191182754.pieces[chckIndx(subInt(targetCell_1191182754.count, 1), 0, (targetCell_1191182754.pieces).length - 1)] == null)) || !((targetCell_1191182754.pieces[chckIndx(subInt(targetCell_1191182754.count, 1), 0, (targetCell_1191182754.pieces).length - 1)].side == piece_1191182536.side)))) {
               F.line = 123;
-              result_1191182526.push({Field0: nx_1191182710, Field1: ny_1191182711});;
+              result_1191182526.push({Field0: nx_1191182714, Field1: ny_1191182715});;
               }
               
               }
