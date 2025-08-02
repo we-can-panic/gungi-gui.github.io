@@ -11,13 +11,16 @@ type
   MoveType* = enum
     Tsuke, Tori  # ツケ（置く）と取る
 
-# 初期駒配置を返す（必要に応じて編集）
-proc placeInitialPieces(): array[BoardWidth, array[BoardHeight, Cell] ] =
+proc initBoard*(): Board =
   var grid: array[BoardWidth, array[BoardHeight, Cell]]
   for x in 0..<BoardWidth:
     for y in 0..<BoardHeight:
       grid[x][y] = initCell()
-  # 例: 1列目に黒sui, 9列目に白suiを置く（実際の軍儀初期配置に合わせて修正可）
+  result.grid = grid
+
+# 初期駒配置を返す（必要に応じて編集）
+proc placeInitialPieces*(): array[BoardWidth, array[BoardHeight, Cell] ] =
+  var grid = initBoard().grid
   var blackSui: PiecePtr
   new blackSui
   blackSui[] = initPiece(sui, black)
@@ -29,9 +32,6 @@ proc placeInitialPieces(): array[BoardWidth, array[BoardHeight, Cell] ] =
   grid[4][8].pushPiece(whiteSui)
   # 他の駒も必要に応じて配置
   return grid
-
-proc initBoard*(): Board =
-  result.grid = placeInitialPieces()
 
 proc getCell*(b: Board, x, y: int): Cell =
   b.grid[x][y]

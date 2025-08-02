@@ -15,6 +15,10 @@ type
     pieces*: array[3, PiecePtr] # 0:最下段, 2:最上段
     count*: int # 現在積まれている駒の数（0〜3）
 
+proc newPiece*(kind: PieceType, side: Side): PiecePtr =
+  new(result)
+  result[] = Piece(kind: kind, side: side)
+
 proc initPiece*(kind: PieceType, side: Side): Piece =
   Piece(kind: kind, side: side)
 
