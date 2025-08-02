@@ -62,7 +62,7 @@ proc onCellClick(x, y: int, cell: Cell): proc() =
               echo $x & ", " & $y & ": " & $cell
       redraw()
 
-proc renderBoard(b: boardmod.Board): VNode =
+proc renderBoard(b: var boardmod.Board): VNode =
   buildHtml(tdiv):
     for x in 0..<boardmod.BoardWidth:
       tr(class = "board"):
@@ -118,9 +118,6 @@ proc renderDebug(): VNode =
 
 
 proc app(): VNode =
-  # 初期配置をセット
-  board.grid = boardmod.placeInitialPieces()
-  board.mochigoma = boardmod.placeInitialMochigoma()
   result = buildHtml(tdiv):
     renderDebug()
     h1:
@@ -128,4 +125,8 @@ proc app(): VNode =
     tdiv:
       renderBoard(board)
 
-setRenderer(app)
+when isMainModule:
+  # 初期配置をセット
+  board.grid = boardmod.placeInitialPieces()
+  board.mochigoma = boardmod.placeInitialMochigoma()
+  setRenderer(app)

@@ -21,10 +21,6 @@ var NTI1207959665 = {size: 0, kind: 18, base: null, node: null, finalizer: null}
 var NTI1207959678 = {size: 0, kind: 24, base: null, node: null, finalizer: null};
 var NTI1207959662 = {size: 0, kind: 18, base: null, node: null, finalizer: null};
 var NTI1207959862 = {size: 0, kind: 24, base: null, node: null, finalizer: null};
-var NTI1191182465 = {size: 0, kind: 24, base: null, node: null, finalizer: null};
-var NTI1191182466 = {size: 0, kind: 16, base: null, node: null, finalizer: null};
-var NTI1191182436 = {size: 0, kind: 16, base: null, node: null, finalizer: null};
-var NTI1191182437 = {size: 0, kind: 16, base: null, node: null, finalizer: null};
 var NTI1056964615 = {size: 0, kind: 18, base: null, node: null, finalizer: null};
 var NTI1023410212 = {size: 0, kind: 18, base: null, node: null, finalizer: null};
 var NTI1023410213 = {size: 0, kind: 22, base: null, node: null, finalizer: null};
@@ -108,6 +104,10 @@ var NTI1056964613 = {size: 0, kind: 14, base: null, node: null, finalizer: null}
 var NTI1056964614 = {size: 0, kind: 18, base: null, node: null, finalizer: null};
 var NTI687865998 = {size: 0, kind: 17, base: null, node: null, finalizer: null};
 var NTI134217745 = {size: 0, kind: 17, base: null, node: null, finalizer: null};
+var NTI1191182465 = {size: 0, kind: 24, base: null, node: null, finalizer: null};
+var NTI1191182466 = {size: 0, kind: 16, base: null, node: null, finalizer: null};
+var NTI1191182436 = {size: 0, kind: 16, base: null, node: null, finalizer: null};
+var NTI1191182437 = {size: 0, kind: 16, base: null, node: null, finalizer: null};
 var NTI1191182350 = {size: 0, kind: 24, base: null, node: null, finalizer: null};
 var NTI1191182351 = {size: 0, kind: 16, base: null, node: null, finalizer: null};
 var NTI1191182346 = {size: 0, kind: 16, base: null, node: null, finalizer: null};
@@ -193,6 +193,10 @@ NTI1191182346.base = NTI1207959559;
 NTI1191182347.base = NTI1191182346;
 NTI1191182350.base = NTI1207959558;
 NTI1191182351.base = NTI1191182350;
+NTI1191182436.base = NTI1207959559;
+NTI1191182437.base = NTI1191182436;
+NTI1191182465.base = NTI1207959558;
+NTI1191182466.base = NTI1191182465;
 var NNI134217745 = {kind: 2, len: 0, offset: 0, typ: null, name: null, sons: []};
 NTI134217745.node = NNI134217745;
 NTI134217745.base = NTI33555178;
@@ -958,10 +962,6 @@ var NNI1056964615 = {kind: 2, len: 3, offset: 0, typ: null, name: null, sons: [{
 {kind: 1, offset: "newChild", len: 0, typ: NTI654311531, name: "newChild", sons: null}, 
 {kind: 1, offset: "pos", len: 0, typ: NTI33554435, name: "pos", sons: null}]};
 NTI1056964615.node = NNI1056964615;
-NTI1191182436.base = NTI1207959559;
-NTI1191182437.base = NTI1191182436;
-NTI1191182465.base = NTI1207959558;
-NTI1191182466.base = NTI1191182465;
 var NNI1207959662 = {kind: 2, len: 2, offset: 0, typ: null, name: null, sons: [{kind: 1, offset: "Field0", len: 0, typ: NTI33554435, name: "Field0", sons: null}, 
 {kind: 1, offset: "Field1", len: 0, typ: NTI33554435, name: "Field1", sons: null}]};
 NTI1207959662.node = NNI1207959662;
@@ -1940,6 +1940,110 @@ function none_520093715() {
   framePtr = F.prev;
 
   return result_520093722;
+
+}
+
+function initPiece_1207959656(kind_1207959657, side_1207959658) {
+  var result_1207959659 = ({kind: 0, side: 0});
+
+  var F = {procname: "piece.initPiece", prev: framePtr, filename: "C:\\Users\\koshi\\Desktop\\projects\\gungi-gui\\components\\piece.nim", line: 0};
+  framePtr = F;
+    F.line = 23;
+    F.filename = "piece.nim";
+    result_1207959659 = nimCopy(result_1207959659, {kind: kind_1207959657, side: side_1207959658}, NTI1207959557);
+  framePtr = F.prev;
+
+  return result_1207959659;
+
+}
+
+function pushPiece_1207959695(c_1207959696, p_1207959697) {
+  var F = {procname: "piece.pushPiece", prev: framePtr, filename: "C:\\Users\\koshi\\Desktop\\projects\\gungi-gui\\components\\piece.nim", line: 0};
+  framePtr = F;
+    if ((c_1207959696.count < 3)) {
+    F.line = 31;
+    F.filename = "piece.nim";
+    c_1207959696.pieces[chckIndx(c_1207959696.count, 0, (c_1207959696.pieces).length - 1)] = p_1207959697;
+    F.line = 32;
+    c_1207959696.count = addInt(c_1207959696.count, 1);
+    }
+    
+  framePtr = F.prev;
+
+  
+}
+
+function placeInitialPieces_1191182443() {
+  var result_1191182444 = [[({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})]];
+
+  var F = {procname: "board.placeInitialPieces", prev: framePtr, filename: "C:\\Users\\koshi\\Desktop\\projects\\gungi-gui\\components\\board.nim", line: 0};
+  framePtr = F;
+  BeforeRet: {
+    F.line = 32;
+    F.filename = "board.nim";
+    var grid_1191182445 = nimCopy(null, initBoard_1191182349().grid, NTI1191182347);
+    F.line = 33;
+    var blackSui_1191182446 = null;
+    F.line = 34;
+    blackSui_1191182446 = ({kind: 0, side: 0});
+    F.line = 35;
+    blackSui_1191182446 = nimCopy(blackSui_1191182446, initPiece_1207959656(0, 0), NTI1207959557);
+    F.line = 36;
+    pushPiece_1207959695(grid_1191182445[chckIndx(4, 0, (grid_1191182445).length - 1)][chckIndx(0, 0, (grid_1191182445[chckIndx(4, 0, (grid_1191182445).length - 1)]).length - 1)], blackSui_1191182446);
+    F.line = 38;
+    var whiteSui_1191182450 = null;
+    F.line = 39;
+    whiteSui_1191182450 = ({kind: 0, side: 0});
+    F.line = 40;
+    whiteSui_1191182450 = nimCopy(whiteSui_1191182450, initPiece_1207959656(0, 1), NTI1207959557);
+    F.line = 41;
+    pushPiece_1207959695(grid_1191182445[chckIndx(4, 0, (grid_1191182445).length - 1)][chckIndx(8, 0, (grid_1191182445[chckIndx(4, 0, (grid_1191182445).length - 1)]).length - 1)], whiteSui_1191182450);
+    F.line = 44;
+    var whiteTaisho_1191182454 = null;
+    F.line = 45;
+    whiteTaisho_1191182454 = ({kind: 0, side: 0});
+    F.line = 46;
+    whiteTaisho_1191182454 = nimCopy(whiteTaisho_1191182454, initPiece_1207959656(1, 1), NTI1207959557);
+    F.line = 47;
+    pushPiece_1207959695(grid_1191182445[chckIndx(4, 0, (grid_1191182445).length - 1)][chckIndx(7, 0, (grid_1191182445[chckIndx(4, 0, (grid_1191182445).length - 1)]).length - 1)], whiteTaisho_1191182454);
+    F.line = 48;
+    result_1191182444 = nimCopy(result_1191182444, grid_1191182445, NTI1191182437);
+    break BeforeRet;
+  };
+  framePtr = F.prev;
+
+  return result_1191182444;
+
+}
+
+function placeInitialMochigoma_1191182475() {
+  var result_1191182476 = [[], []];
+
+  var F = {procname: "board.placeInitialMochigoma", prev: framePtr, filename: "C:\\Users\\koshi\\Desktop\\projects\\gungi-gui\\components\\board.nim", line: 0};
+  framePtr = F;
+  BeforeRet: {
+    F.line = 52;
+    F.filename = "board.nim";
+    var mochigoma_1191182477 = [[], []];
+    F.line = 53;
+    mochigoma_1191182477[chckIndx(0, 0, (mochigoma_1191182477).length - 1)] = nimCopy(null, [], NTI1191182380);
+    F.line = 54;
+    mochigoma_1191182477[chckIndx(1, 0, (mochigoma_1191182477).length - 1)] = nimCopy(null, [], NTI1191182380);
+    F.line = 56;
+    var blackTaisho_1191182486 = null;
+    F.line = 57;
+    blackTaisho_1191182486 = ({kind: 0, side: 0});
+    F.line = 58;
+    blackTaisho_1191182486 = nimCopy(blackTaisho_1191182486, initPiece_1207959656(1, 0), NTI1207959557);
+    F.line = 59;
+    mochigoma_1191182477[chckIndx(0, 0, (mochigoma_1191182477).length - 1)].push(blackTaisho_1191182486);;
+    F.line = 61;
+    result_1191182476 = nimCopy(result_1191182476, mochigoma_1191182477, NTI1191182466);
+    break BeforeRet;
+  };
+  framePtr = F.prev;
+
+  return result_1191182476;
 
 }
 
@@ -3881,110 +3985,6 @@ function wrapPostRender_1056966354(data_1056966355) {
 
 }
 
-function initPiece_1207959656(kind_1207959657, side_1207959658) {
-  var result_1207959659 = ({kind: 0, side: 0});
-
-  var F = {procname: "piece.initPiece", prev: framePtr, filename: "C:\\Users\\koshi\\Desktop\\projects\\gungi-gui\\components\\piece.nim", line: 0};
-  framePtr = F;
-    F.line = 23;
-    F.filename = "piece.nim";
-    result_1207959659 = nimCopy(result_1207959659, {kind: kind_1207959657, side: side_1207959658}, NTI1207959557);
-  framePtr = F.prev;
-
-  return result_1207959659;
-
-}
-
-function pushPiece_1207959695(c_1207959696, p_1207959697) {
-  var F = {procname: "piece.pushPiece", prev: framePtr, filename: "C:\\Users\\koshi\\Desktop\\projects\\gungi-gui\\components\\piece.nim", line: 0};
-  framePtr = F;
-    if ((c_1207959696.count < 3)) {
-    F.line = 31;
-    F.filename = "piece.nim";
-    c_1207959696.pieces[chckIndx(c_1207959696.count, 0, (c_1207959696.pieces).length - 1)] = p_1207959697;
-    F.line = 32;
-    c_1207959696.count = addInt(c_1207959696.count, 1);
-    }
-    
-  framePtr = F.prev;
-
-  
-}
-
-function placeInitialPieces_1191182443() {
-  var result_1191182444 = [[({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})], [({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0}), ({pieces: [null, null, null], count: 0})]];
-
-  var F = {procname: "board.placeInitialPieces", prev: framePtr, filename: "C:\\Users\\koshi\\Desktop\\projects\\gungi-gui\\components\\board.nim", line: 0};
-  framePtr = F;
-  BeforeRet: {
-    F.line = 32;
-    F.filename = "board.nim";
-    var grid_1191182445 = nimCopy(null, initBoard_1191182349().grid, NTI1191182347);
-    F.line = 33;
-    var blackSui_1191182446 = null;
-    F.line = 34;
-    blackSui_1191182446 = ({kind: 0, side: 0});
-    F.line = 35;
-    blackSui_1191182446 = nimCopy(blackSui_1191182446, initPiece_1207959656(0, 0), NTI1207959557);
-    F.line = 36;
-    pushPiece_1207959695(grid_1191182445[chckIndx(4, 0, (grid_1191182445).length - 1)][chckIndx(0, 0, (grid_1191182445[chckIndx(4, 0, (grid_1191182445).length - 1)]).length - 1)], blackSui_1191182446);
-    F.line = 38;
-    var whiteSui_1191182450 = null;
-    F.line = 39;
-    whiteSui_1191182450 = ({kind: 0, side: 0});
-    F.line = 40;
-    whiteSui_1191182450 = nimCopy(whiteSui_1191182450, initPiece_1207959656(0, 1), NTI1207959557);
-    F.line = 41;
-    pushPiece_1207959695(grid_1191182445[chckIndx(4, 0, (grid_1191182445).length - 1)][chckIndx(8, 0, (grid_1191182445[chckIndx(4, 0, (grid_1191182445).length - 1)]).length - 1)], whiteSui_1191182450);
-    F.line = 44;
-    var whiteTaisho_1191182454 = null;
-    F.line = 45;
-    whiteTaisho_1191182454 = ({kind: 0, side: 0});
-    F.line = 46;
-    whiteTaisho_1191182454 = nimCopy(whiteTaisho_1191182454, initPiece_1207959656(1, 1), NTI1207959557);
-    F.line = 47;
-    pushPiece_1207959695(grid_1191182445[chckIndx(4, 0, (grid_1191182445).length - 1)][chckIndx(7, 0, (grid_1191182445[chckIndx(4, 0, (grid_1191182445).length - 1)]).length - 1)], whiteTaisho_1191182454);
-    F.line = 48;
-    result_1191182444 = nimCopy(result_1191182444, grid_1191182445, NTI1191182437);
-    break BeforeRet;
-  };
-  framePtr = F.prev;
-
-  return result_1191182444;
-
-}
-
-function placeInitialMochigoma_1191182475() {
-  var result_1191182476 = [[], []];
-
-  var F = {procname: "board.placeInitialMochigoma", prev: framePtr, filename: "C:\\Users\\koshi\\Desktop\\projects\\gungi-gui\\components\\board.nim", line: 0};
-  framePtr = F;
-  BeforeRet: {
-    F.line = 52;
-    F.filename = "board.nim";
-    var mochigoma_1191182477 = [[], []];
-    F.line = 53;
-    mochigoma_1191182477[chckIndx(0, 0, (mochigoma_1191182477).length - 1)] = nimCopy(null, [], NTI1191182380);
-    F.line = 54;
-    mochigoma_1191182477[chckIndx(1, 0, (mochigoma_1191182477).length - 1)] = nimCopy(null, [], NTI1191182380);
-    F.line = 56;
-    var blackTaisho_1191182486 = null;
-    F.line = 57;
-    blackTaisho_1191182486 = ({kind: 0, side: 0});
-    F.line = 58;
-    blackTaisho_1191182486 = nimCopy(blackTaisho_1191182486, initPiece_1207959656(1, 0), NTI1207959557);
-    F.line = 59;
-    mochigoma_1191182477[chckIndx(0, 0, (mochigoma_1191182477).length - 1)].push(blackTaisho_1191182486);;
-    F.line = 61;
-    result_1191182476 = nimCopy(result_1191182476, mochigoma_1191182477, NTI1191182466);
-    break BeforeRet;
-  };
-  framePtr = F.prev;
-
-  return result_1191182476;
-
-}
-
 function newVNode_654312187(kind_654312188) {
   var result_654312189 = null;
 
@@ -5494,27 +5494,23 @@ function app_520094354() {
 
   var F = {procname: "main.app", prev: framePtr, filename: "C:\\Users\\koshi\\Desktop\\projects\\gungi-gui\\main.nim", line: 0};
   framePtr = F;
-    F.line = 122;
+    F.line = 121;
     F.filename = "main.nim";
-    board_520093704[0].grid = nimCopy(board_520093704[0].grid, placeInitialPieces_1191182443(), NTI1191182347);
-    F.line = 123;
-    board_520093704[0].mochigoma = nimCopy(board_520093704[0].mochigoma, placeInitialMochigoma_1191182475(), NTI1191182351);
-    F.line = 124;
-    F.line = 124;
+    F.line = 121;
     var tmp_520094356 = tree_654312190(43, []);
-    F.line = 125;
+    F.line = 122;
     add_654312126(tmp_520094356, renderDebug_520094229());
-    F.line = 126;
+    F.line = 123;
     var tmp_520094357 = tree_654312190(21, []);
-    F.line = 127;
+    F.line = 124;
     add_654312126(tmp_520094357, text_654312258([232,187,141,229,132,128,32,71,85,73]));
-    F.line = 127;
+    F.line = 124;
     add_654312126(tmp_520094356, tmp_520094357);
-    F.line = 128;
+    F.line = 125;
     var tmp_520094358 = tree_654312190(43, []);
-    F.line = 129;
+    F.line = 126;
     add_654312126(tmp_520094358, renderBoard_520094142(board_520093704[0]));
-    F.line = 129;
+    F.line = 126;
     add_654312126(tmp_520094356, tmp_520094358);
     result_520094355 = tmp_520094356;
   framePtr = F.prev;
@@ -5533,6 +5529,10 @@ F.line = 11;
 var selectedPos_520093723 = [none_520093715()];
 F.line = 13;
 var TSUKE_MAX_520093724 = 3;
+F.line = 130;
+board_520093704[0].grid = nimCopy(board_520093704[0].grid, placeInitialPieces_1191182443(), NTI1191182347);
+F.line = 131;
+board_520093704[0].mochigoma = nimCopy(board_520093704[0].mochigoma, placeInitialMochigoma_1191182475(), NTI1191182351);
 setRenderer_1056966344(app_520094354, "ROOT", null);
 framePtr = F.prev;
 var F = {procname: "module main", prev: framePtr, filename: "C:\\Users\\koshi\\Desktop\\projects\\gungi-gui\\main.nim", line: 0};
