@@ -134,3 +134,22 @@ proc getMovableCells*(b: Board, x, y: int): seq[(int, int)] =
         let targetCell = b.grid[nx][ny]
         if targetCell.count == 0 or targetCell.pieces[targetCell.count-1] == nil or targetCell.pieces[targetCell.count-1].side != piece.side:
           result.add((nx, ny))
+
+# 持ち駒をセットする（盤外の駒をセット）
+proc placeMochigoma*(b: var Board, x, y: int, piece: PiecePtr) =
+  var cell = b.getCell(x, y)
+  cell.pushPiece(piece)
+  b.setCell(x, y, cell)
+
+func getPlacableCells*(b: Board, piece: PiecePtr, side: Side): seq[(int, int)] =
+  result = @[]
+  for x in 0..<BoardWidth:
+    for y in 0..<BoardHeight:
+      let cell = b.getCell(x, y)
+      if cell.count == 0 or cell.pieces[cell.count-1] == nil:
+        # 空のセルに持ち駒を置ける
+        result.add((x, y))
+      elif cell.pieces[cell.count-1].side != side:
+        # 相手の駒があるセルには置けない
+        continue
+  return result

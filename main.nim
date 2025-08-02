@@ -8,7 +8,9 @@ type Cell = piece.Cell
 
 var board: boardmod.Board = boardmod.initBoard()
 var movableCells: seq[(int, int)] = @[]
+var placableCells: seq[(int, int)] = @[]
 var selectedPos: Option[(int, int)] = none((int, int))
+var selectedMochigoma: Option[(Side, int)] = none((Side, int)) # (side, index in mochigoma)
 
 let TSUKE_MAX = 3  # ツケの段数（最大3段まで）
 
@@ -30,7 +32,19 @@ proc onCellMouseOut(x, y: int): proc() =
 # セルクリック処理
 proc onCellClick(x, y: int, cell: Cell): proc() =
   return proc() =
-    if selectedPos.isNone:
+    if selectedMochigoma.isSome:
+      # 持ち駒選択中→置き処理
+      if placableCells.contains((x, y)):
+        let (side, idx) = selectedMochigoma.get()
+        let piece = board.mochigoma[side][idx]
+        # 盤面に配置
+        board.placeMochigoma(x, y, piece)
+        # 持ち駒から削除
+        board.mochigoma[side].delete(idx)
+      selectedMochigoma = none((Side, int))
+      placableCells = @[]
+      redraw()
+    elif selectedPos.isNone:
       # 駒選択
       if cell.count > 0 and cell.pieces[cell.count-1] != nil:
         selectedPos = some((x, y))
@@ -62,6 +76,14 @@ proc onCellClick(x, y: int, cell: Cell): proc() =
               echo $x & ", " & $y & ": " & $cell
       redraw()
 
+proc onMochigomaClick(side: Side, idx: int, piece: PiecePtr): proc() =
+  return proc() =
+      # ツケ可能なセルを取得
+      placableCells = getPlacableCells(board, piece, side)
+      selectedMochigoma = some((side, idx))
+      selectedPos = none((int, int))
+      movableCells = @[]
+
 proc renderMochigoma(side: Side): VNode =
   let label = if side == black: "黒" else: "白"
   let pieces = board.mochigoma[side]
@@ -77,8 +99,12 @@ proc renderMochigoma(side: Side): VNode =
             let idx = r * cols + c
             if idx < pieces.len:
               let piece = pieces[idx]
+              let isSelected = selectedMochigoma.isSome and selectedMochigoma.get() == (side, idx)
               td:
-                span(class = "mochigoma-piece " & (if side == black: "black-side" else: "white-side")):
+                span(
+                  class = "mochigoma-piece " & (if side == black: "black-side" else: "white-side") & (if isSelected: " movable" else: ""),
+                  onClick = onMochigomaClick(side, idx, piece),
+                ):
                   text $piece.kind
             else:
               td: text ""
@@ -106,7 +132,7 @@ proc renderBoard(b: var boardmod.Board): VNode =
               else:
                 ""
             movableClass = block:
-              if (x, y) in movableCells:
+              if (x, y) in movableCells or (x, y) in placableCells:
                 " movable "
               else:
                 ""
@@ -134,6 +160,12 @@ proc renderDebug(): VNode =
       text "mochigoma[black]: " & $board.mochigoma[black].len & "個"
     tdiv:
       text "mochigoma[white]: " & $board.mochigoma[white].len & "個"
+    # tdiv:
+    #   text "placableCells: " & $placableCells
+    tdiv:
+      text "selectedMochigoma: " & $selectedMochigoma
+    tdiv:
+      text "Board cells:"
     tdiv:
       for x in 0..<boardmod.BoardWidth:
         for y in 0..<boardmod.BoardHeight:
