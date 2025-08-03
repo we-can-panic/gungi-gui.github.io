@@ -59,6 +59,11 @@ func deletePiecesAt*(c: var Cell, side: Side) =
       newCount += 1
   c.count = newCount
 
+func `$`*(s: Side): string =
+  case s
+  of black: "黒"
+  of white: "白"
+
 # 駒の移動パターンを返す（ツケの段数によって動きが変わる）
 # 戻り値は相対座標のリスト（例: [(-1,0), (1,0)] なら上下に1マス動ける）
 proc getMovePattern*(kind: PieceType, stackLevel: int, side: Side): seq[seq[(int, int)]] =

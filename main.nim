@@ -2,7 +2,7 @@
 import karax / [vdom, karax, karaxdsl]
 import components/board as boardmod  # 盤面クラス（board.nim）
 import components/piece  # 駒クラス（piece.nim）
-import options
+import options, random
 
 type Cell = piece.Cell
 
@@ -11,6 +11,7 @@ var movableCells: seq[(int, int)] = @[]
 var placableCells: seq[(int, int)] = @[]
 var selectedPos: Option[(int, int)] = none((int, int))
 var selectedMochigoma: Option[(Side, int)] = none((Side, int)) # (side, index in mochigoma)
+var turn: Side
 
 let TSUKE_MAX = 3  # ツケの段数（最大3段まで）
 
@@ -29,6 +30,14 @@ proc onCellMouseOut(x, y: int): proc() =
       movableCells = @[]
       redraw()
 
+proc turnEnd() =
+  movableCells = @[]
+  selectedPos = none((int, int))
+  selectedMochigoma = none((Side, int))
+  placableCells = @[]
+  turn = if turn == black: white else: black
+
+
 # セルクリック処理
 proc onCellClick(x, y: int, cell: Cell): proc() =
   return proc() =
@@ -41,12 +50,13 @@ proc onCellClick(x, y: int, cell: Cell): proc() =
         board.placeMochigoma(x, y, piece)
         # 持ち駒から削除
         board.mochigoma[side].delete(idx)
+        turnEnd()
       selectedMochigoma = none((Side, int))
       placableCells = @[]
       redraw()
     elif selectedPos.isNone:
       # 駒選択
-      if cell.count > 0 and cell.pieces[cell.count-1] != nil:
+      if cell.count > 0 and cell.pieces[cell.count-1] != nil and cell.getPiece().side == turn:
         selectedPos = some((x, y))
         movableCells = board.getMovableCells(x, y, TSUKE_MAX)
         redraw()
@@ -67,6 +77,7 @@ proc onCellClick(x, y: int, cell: Cell): proc() =
         else:
           # ツケ不可能であれば取る
           board.moveCell((sx, sy), (x, y), MoveType.Tori)
+        turnEnd()
       selectedPos = none((int, int))
       movableCells = @[]
       for x in 0..<BoardWidth:
@@ -78,6 +89,7 @@ proc onCellClick(x, y: int, cell: Cell): proc() =
 
 proc onMochigomaClick(side: Side, idx: int, piece: PiecePtr): proc() =
   return proc() =
+    if side == turn:
       # ツケ可能なセルを取得
       placableCells = getPlacableCells(board, piece, side)
       selectedMochigoma = some((side, idx))
@@ -181,10 +193,14 @@ proc app(): VNode =
     h1:
       text "軍儀 GUI"
     tdiv:
+      text "手番: " & $turn
+    tdiv:
       renderBoard(board)
 
 when isMainModule:
   # 初期配置をセット
+  randomize()
+  turn = Side(rand(ord(Side.high)))
   board.grid = boardmod.placeInitialPieces()
   board.mochigoma = boardmod.placeInitialMochigoma()
   setRenderer(app)
