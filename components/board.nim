@@ -118,6 +118,8 @@ proc getMovableCells*(b: Board, x, y: int, TSUKE_MAX: int): seq[(int, int)] =
     return
   let piece = cell.pieces[cell.count-1]
   let piecerange = getMovePattern(piece.kind, cell.count - 1, piece.side)  # stackLevelはcount-1で取得
+  
+  # 特殊な動き方の処理
   case piece.kind
   of taisho: # 他の駒があるまで上下左右に一直線(チェスのrookと同じ) + 斜め1マス
     for (dx, dy) in [(-1,0), (1,0), (0,-1), (0,1)]:
@@ -138,12 +140,6 @@ proc getMovableCells*(b: Board, x, y: int, TSUKE_MAX: int): seq[(int, int)] =
           break  # それ以降は終了
         nx += dx
         ny += dy
-    # 斜め1マスも追加
-    for (dx, dy) in [(-1,-1), (-1,1), (1,-1), (1,1)]:
-      let nx = x + dx
-      let ny = y + dy
-      if nx in 0..<BoardWidth and ny in 0..<BoardHeight:
-        result.add((nx, ny))
   of chujo: # 他の駒があるまで斜め一直線(チェスのbishopと同じ) + 縦横1マス
     for (dx, dy) in [(-1,-1), (-1,1), (1,-1), (1,1)]:
       var nx = x + dx
@@ -163,22 +159,24 @@ proc getMovableCells*(b: Board, x, y: int, TSUKE_MAX: int): seq[(int, int)] =
           break  # それ以降は終了
         nx += dx
         ny += dy
-    # 縦横1マスも追加
-    for (dx, dy) in [(-1,0), (1,0), (0,-1), (0,1)]:
-      let nx = x + dx
-      let ny = y + dy
-      if nx in 0..<BoardWidth and ny in 0..<BoardHeight:
-        result.add((nx, ny))
-
   else:
-    for (dx, dy) in piecerange:
-      let nx = x + dx
-      let ny = y + dy
-      if nx in 0..<BoardWidth and ny in 0..<BoardHeight:
-        # 自分の駒がいない場合のみ移動可
-        let targetCell = b.grid[nx][ny]
-        if targetCell.count == 0 or targetCell.pieces[targetCell.count-1] == nil or targetCell.pieces[targetCell.count-1].side != piece.side:
-          result.add((nx, ny))
+    discard
+
+  # 通常の駒の動き
+  for (dx, dy) in piecerange:
+    let nx = x + dx
+    let ny = y + dy
+    if nx in 0..<BoardWidth and ny in 0..<BoardHeight:
+      # 自分の駒がいなければ移動可
+      let targetCell = b.grid[nx][ny]
+      if targetCell.count == 0:
+        result.add((nx, ny))
+      # 自分の駒があり、ツケ可能であれば移動可能
+      elif targetCell.pieces[targetCell.count-1].side == piece.side and targetCell.count < TSUKE_MAX and targetCell.pieces[targetCell.count-1].kind != sui:
+        result.add((nx, ny))
+      # 相手の駒があれば移動可能
+      elif targetCell.pieces[targetCell.count-1].side != piece.side:
+        result.add((nx, ny))
 
 # 持ち駒をセットする（盤外の駒をセット）
 proc placeMochigoma*(b: var Board, x, y: int, piece: PiecePtr) =
