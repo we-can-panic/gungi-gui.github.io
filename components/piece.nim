@@ -585,4 +585,4 @@ func `$`*(k: PieceType): string =
   of oozutsu: "砲"
   of yumi: "弓"
   of tsutsu: "筒"
-  of bou: "棒"
+  of bou: "謀"
