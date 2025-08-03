@@ -58,7 +58,7 @@ proc onCellClick(x, y: int, cell: Cell): proc() =
         let srcPiece = board.getCell(sx, sy).getPiece()
         let dstPiece = cell.getPiece()
         if dstPiece != nil and dstPiece.side != srcPiece.side and
-           cell.count < boardmod.TSUKE_MAX and dstPiece.kind != sui:
+           cell.count < TSUKE_MAX and dstPiece.kind != sui:
           # ユーザーにツケか取るか選ばせる
           if confirm("相手の駒にツケますか？OK=ツケ, キャンセル=取る"):
             board.moveCell((sx, sy), (x, y), MoveType.Tsuke)

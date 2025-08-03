@@ -105,7 +105,7 @@ proc getMovableCells*(b: Board, x, y: int, TSUKE_MAX: int): seq[(int, int)] =
   if cell.count == 0 or cell.pieces[cell.count-1] == nil:
     return
   let piece = cell.pieces[cell.count-1]
-  let piecerange = getMovePattern(piece.kind, cell.count - 1)  # stackLevelはcount-1で取得
+  let piecerange = getMovePattern(piece.kind, cell.count - 1, piece.side)  # stackLevelはcount-1で取得
   case piece.kind
   of taisho: # 他の駒があるまで上下左右に一直線(チェスのrookと同じ) + 斜め1マス
     for (dx, dy) in [(-1,0), (1,0), (0,-1), (0,1)]:
@@ -132,6 +132,32 @@ proc getMovableCells*(b: Board, x, y: int, TSUKE_MAX: int): seq[(int, int)] =
       let ny = y + dy
       if nx in 0..<BoardWidth and ny in 0..<BoardHeight:
         result.add((nx, ny))
+  of chujo: # 他の駒があるまで斜め一直線(チェスのbishopと同じ) + 縦横1マス
+    for (dx, dy) in [(-1,-1), (-1,1), (1,-1), (1,1)]:
+      var nx = x + dx
+      var ny = y + dy
+      while nx in 0..<BoardWidth and ny in 0..<BoardHeight:
+        let targetCell = b.grid[nx][ny]
+        # 何もなければ移動可能
+        if targetCell.count == 0:
+          result.add((nx, ny))
+        # 相手の駒があれば移動可能
+        elif targetCell.pieces[targetCell.count-1].side != piece.side:
+          result.add((nx, ny))
+          break  # それ以降は終了
+        # 自分の駒があり、ツケ可能であれば移動可能
+        elif targetCell.pieces[targetCell.count-1].side == piece.side and targetCell.count < TSUKE_MAX and targetCell.pieces[targetCell.count-1].kind != sui:
+          result.add((nx, ny))
+          break  # それ以降は終了
+        nx += dx
+        ny += dy
+    # 縦横1マスも追加
+    for (dx, dy) in [(-1,0), (1,0), (0,-1), (0,1)]:
+      let nx = x + dx
+      let ny = y + dy
+      if nx in 0..<BoardWidth and ny in 0..<BoardHeight:
+        result.add((nx, ny))
+
   else:
     for (dx, dy) in piecerange:
       let nx = x + dx
@@ -160,3 +186,8 @@ func getPlacableCells*(b: Board, piece: PiecePtr, side: Side): seq[(int, int)] =
         # 相手の駒があるセルには置けない
         continue
   return result
+
+proc pushPiece*(b: var Board, x, y: int, piece: PiecePtr) =
+  var cell = b.getCell(x, y)
+  cell.pushPiece(piece)
+  b.setCell(x, y, cell)
