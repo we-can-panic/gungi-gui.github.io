@@ -41,9 +41,9 @@ suite "Piece move tests lv 1":
     let moves = b.getMovableCells(4, 4, 3)
     check moves.len == 5 # 周囲4マス（斜め後ろ・真横を除く） + さらに前方1マス
 
-  test "uma moves correctly":
+  test "kiba moves correctly":
     var b = initBoard()
-    b.pushPiece(4, 4, newPiece(PieceType.uma, Side.white))
+    b.pushPiece(4, 4, newPiece(PieceType.kiba, Side.white))
     let moves = b.getMovableCells(4, 4, 3)
     check moves.len == 6 # 周囲4マス（斜めを除く） + さらに前後1マス
 
@@ -65,9 +65,9 @@ suite "Piece move tests lv 1":
     let moves = b.getMovableCells(4, 4, 3)
     check moves.len == 2 # 前後2マス
 
-  test "hou moves correctly":
+  test "oozutsu moves correctly":
     var b = initBoard()
-    b.pushPiece(4, 4, newPiece(PieceType.hou, Side.white))
+    b.pushPiece(4, 4, newPiece(PieceType.oozutsu, Side.white))
     let moves = b.getMovableCells(4, 4, 3)
     check moves.len == 4 # 横・後ろ3マス + 3マス先の前方1マス
 

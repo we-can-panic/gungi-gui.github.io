@@ -1,6 +1,6 @@
 type
   PieceType* = enum
-    sui, taisho, chujo, shosho, samurai, yari, uma, shinobi, toride, hyou, hou, yumi, tsutsu, bou
+    sui, taisho, chujo, shosho, samurai, yari, kiba, shinobi, toride, hyou, oozutsu, yumi, tsutsu, bou
 
   Side* = enum
     black, white
@@ -295,7 +295,7 @@ proc getMovePattern*(kind: PieceType, stackLevel: int, side: Side): seq[seq[(int
         @[(0,1),(0,2),(0,3)],
       ]
     else: discard
-  of uma:
+  of kiba:
     # 周囲4マス（斜めを除く） + さらに前後1マス
     case stackLevel
     of 0: result = @[
@@ -404,7 +404,7 @@ proc getMovePattern*(kind: PieceType, stackLevel: int, side: Side): seq[seq[(int
         @[(0,1),(0,2),(0,3)],
       ]
     else: discard
-  of hou:
+  of oozutsu:
     # 横・後ろ3マス + 3マス先の前方1マス
     case stackLevel
     of 0: result = case side
@@ -578,11 +578,11 @@ func `$`*(k: PieceType): string =
   of shosho: "小"
   of samurai: "侍"
   of yari: "槍"
-  of uma: "馬"
+  of kiba: "馬"
   of shinobi: "忍"
   of toride: "砦"
   of hyou: "兵"
-  of hou: "砲"
+  of oozutsu: "砲"
   of yumi: "弓"
   of tsutsu: "筒"
   of bou: "棒"

@@ -69,8 +69,8 @@ proc placeInitialMochigoma*(): array[Side, seq[PiecePtr]] =
     newPiece(shosho, black),
     newPiece(yari, black),
     newPiece(yari, black),
-    newPiece(uma, black),
-    newPiece(uma, black),
+    newPiece(kiba, black),
+    newPiece(kiba, black),
     newPiece(hyou, black),
   ]
   mochigoma[white] = @[
@@ -78,8 +78,8 @@ proc placeInitialMochigoma*(): array[Side, seq[PiecePtr]] =
     newPiece(shosho, white),
     newPiece(yari, white),
     newPiece(yari, white),
-    newPiece(uma, white),
-    newPiece(uma, white),
+    newPiece(kiba, white),
+    newPiece(kiba, white),
     newPiece(hyou, white),
   ]
 
