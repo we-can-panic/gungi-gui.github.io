@@ -30,46 +30,58 @@ proc addMochigoma*(b: var Board, side: Side, piece: PiecePtr) =
 # 初期駒配置を返す（必要に応じて編集）
 proc placeInitialPieces*(): array[BoardWidth, array[BoardHeight, Cell] ] =
   var grid = initBoard().grid
-  var blackSui: PiecePtr
-  new blackSui
-  blackSui[] = initPiece(sui, black)
-  grid[4][0].pushPiece(blackSui)
 
-  var whiteSui: PiecePtr
-  new whiteSui
-  whiteSui[] = initPiece(sui, white)
-  grid[4][8].pushPiece(whiteSui)
+  grid[4][0].pushPiece(newPiece(sui, black))
+  grid[3][0].pushPiece(newPiece(taisho, black))
+  grid[5][0].pushPiece(newPiece(chujo, black))
+  grid[1][1].pushPiece(newPiece(shinobi, black))
+  grid[7][1].pushPiece(newPiece(shinobi, black))
+  grid[4][1].pushPiece(newPiece(yari, black))
+  grid[0][2].pushPiece(newPiece(hyou, black))
+  grid[4][2].pushPiece(newPiece(hyou, black))
+  grid[8][2].pushPiece(newPiece(hyou, black))
+  grid[2][2].pushPiece(newPiece(toride, black))
+  grid[6][2].pushPiece(newPiece(toride, black))
+  grid[3][2].pushPiece(newPiece(samurai, black))
+  grid[5][2].pushPiece(newPiece(samurai, black))
 
-  # 他の駒も必要に応じて配置
-  var whiteTaisho: PiecePtr
-  new whiteTaisho
-  whiteTaisho[] = initPiece(taisho, white)
-  grid[4][7].pushPiece(whiteTaisho)
+  grid[4][8].pushPiece(newPiece(sui, white))
+  grid[3][8].pushPiece(newPiece(taisho, white))
+  grid[5][8].pushPiece(newPiece(chujo, white))
+  grid[1][7].pushPiece(newPiece(shinobi, white))
+  grid[7][7].pushPiece(newPiece(shinobi, white))
+  grid[4][7].pushPiece(newPiece(yari, white))
+  grid[0][6].pushPiece(newPiece(hyou, white))
+  grid[4][6].pushPiece(newPiece(hyou, white))
+  grid[8][6].pushPiece(newPiece(hyou, white))
+  grid[2][6].pushPiece(newPiece(toride, white))
+  grid[6][6].pushPiece(newPiece(toride, white))
+  grid[3][6].pushPiece(newPiece(samurai, white))
+  grid[5][6].pushPiece(newPiece(samurai, white))
+
   return grid
 
 # 初期置き駒を返す（必要に応じて編集）
 proc placeInitialMochigoma*(): array[Side, seq[PiecePtr]] =
   var mochigoma: array[Side, seq[PiecePtr]]
-  mochigoma[black] = @[]
-  mochigoma[white] = @[]
-  # 例: 黒の持ち駒として黒のtaishoを1つ追加
-  var blackTaisho: PiecePtr
-  new blackTaisho
-  blackTaisho[] = initPiece(taisho, black)
-  mochigoma[black].add(blackTaisho)
-
-  # 例: 黒の持ち駒として黒のchujoを1つ追加
-  var blackChujo: PiecePtr
-  new blackChujo
-  blackChujo[] = initPiece(chujo, black)
-  for i in 0..<10:
-    mochigoma[black].add(blackChujo)
-
-  # 例: 白の持ち駒として白のtaishoを1つ追加
-  var whiteTaisho: PiecePtr
-  new whiteTaisho
-  whiteTaisho[] = initPiece(taisho, white)
-  mochigoma[white].add(whiteTaisho)
+  mochigoma[black] = @[
+    newPiece(shosho, black),
+    newPiece(shosho, black),
+    newPiece(yari, black),
+    newPiece(yari, black),
+    newPiece(uma, black),
+    newPiece(uma, black),
+    newPiece(hyou, black),
+  ]
+  mochigoma[white] = @[
+    newPiece(shosho, white),
+    newPiece(shosho, white),
+    newPiece(yari, white),
+    newPiece(yari, white),
+    newPiece(uma, white),
+    newPiece(uma, white),
+    newPiece(hyou, white),
+  ]
 
   return mochigoma
 
