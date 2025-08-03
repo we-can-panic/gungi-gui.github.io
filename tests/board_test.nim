@@ -37,7 +37,7 @@ suite "Board module tests":
 
   test "getMovableCells returns empty for empty cell":
     let b = initBoard()
-    let moves = b.getMovableCells(0, 0)
+    let moves = b.getMovableCells(0, 0, 3)
     check moves.len == 0
 
   test "moveCell moves piece correctly":

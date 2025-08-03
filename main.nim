@@ -20,7 +20,7 @@ proc confirm(message: cstring): bool {.importjs: "confirm(#)".}
 proc onCellMouseOver(x, y: int, cell: Cell): proc() =
   return proc() =
     if selectedPos.isNone and cell.count > 0 and cell.pieces[cell.count-1] != nil:
-      movableCells = board.getMovableCells(x, y)
+      movableCells = board.getMovableCells(x, y, TSUKE_MAX)  # ツケの段数を考慮
       redraw()
 
 proc onCellMouseOut(x, y: int): proc() =
@@ -48,7 +48,7 @@ proc onCellClick(x, y: int, cell: Cell): proc() =
       # 駒選択
       if cell.count > 0 and cell.pieces[cell.count-1] != nil:
         selectedPos = some((x, y))
-        movableCells = board.getMovableCells(x, y)
+        movableCells = board.getMovableCells(x, y, TSUKE_MAX)
         redraw()
     else:
       # 移動可能範囲なら移動
@@ -58,7 +58,7 @@ proc onCellClick(x, y: int, cell: Cell): proc() =
         let srcPiece = board.getCell(sx, sy).getPiece()
         let dstPiece = cell.getPiece()
         if dstPiece != nil and dstPiece.side != srcPiece.side and
-           cell.count < TSUKE_MAX and dstPiece.kind != sui:
+           cell.count < boardmod.TSUKE_MAX and dstPiece.kind != sui:
           # ユーザーにツケか取るか選ばせる
           if confirm("相手の駒にツケますか？OK=ツケ, キャンセル=取る"):
             board.moveCell((sx, sy), (x, y), MoveType.Tsuke)

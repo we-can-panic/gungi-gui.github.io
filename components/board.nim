@@ -99,7 +99,7 @@ proc moveCell*(b: var Board, src: (int, int), dst: (int, int), moveType: MoveTyp
   b.setCell(dst[0], dst[1], dstCell)
 
 # 指定座標の駒の移動可能範囲（現状suiのみ: 上下左右1マス）
-proc getMovableCells*(b: Board, x, y: int): seq[(int, int)] =
+proc getMovableCells*(b: Board, x, y: int, TSUKE_MAX: int): seq[(int, int)] =
   result = @[]
   let cell = b.grid[x][y]
   if cell.count == 0 or cell.pieces[cell.count-1] == nil:
@@ -113,10 +113,17 @@ proc getMovableCells*(b: Board, x, y: int): seq[(int, int)] =
       var ny = y + dy
       while nx in 0..<BoardWidth and ny in 0..<BoardHeight:
         let targetCell = b.grid[nx][ny]
-        if targetCell.count == 0 or targetCell.pieces[targetCell.count-1].side != piece.side:
+        # 何もなければ移動可能
+        if targetCell.count == 0:
           result.add((nx, ny))
-        else:
-          break  # 自分の駒があったらここで終了
+        # 相手の駒があれば移動可能
+        elif targetCell.pieces[targetCell.count-1].side != piece.side:
+          result.add((nx, ny))
+          break  # それ以降は終了
+        # 自分の駒があり、ツケ可能であれば移動可能
+        elif targetCell.pieces[targetCell.count-1].side == piece.side and targetCell.count < TSUKE_MAX and targetCell.pieces[targetCell.count-1].kind != sui:
+          result.add((nx, ny))
+          break  # それ以降は終了
         nx += dx
         ny += dy
     # 斜め1マスも追加
