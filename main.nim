@@ -6,12 +6,16 @@ import options, random
 
 type Cell = piece.Cell
 
+
 var board: boardmod.Board = boardmod.initBoard()
 var movableCells: seq[(int, int)] = @[]
 var placableCells: seq[(int, int)] = @[]
 var selectedPos: Option[(int, int)] = none((int, int))
 var selectedMochigoma: Option[(Side, int)] = none((Side, int)) # (side, index in mochigoma)
 var turn: Side
+
+# デバッグウインドウの折りたたみ状態
+var debugCollapsed = false
 
 let TSUKE_MAX = 3  # ツケの段数（最大3段まで）
 
@@ -163,28 +167,33 @@ proc renderBoard(b: var boardmod.Board): VNode =
 # デバッグウインドウ
 proc renderDebug(): VNode =
   buildHtml(tdiv(class = "debug-window")):
-    h3: text "[DEBUG]"
-    tdiv:
-      text "movableCells: " & $movableCells
-    tdiv:
-      text "selectedPos: " & $selectedPos
-    tdiv:
-      text "mochigoma[black]: " & $board.mochigoma[black].len & "個"
-    tdiv:
-      text "mochigoma[white]: " & $board.mochigoma[white].len & "個"
-    # tdiv:
-    #   text "placableCells: " & $placableCells
-    tdiv:
-      text "selectedMochigoma: " & $selectedMochigoma
-    tdiv:
-      text "Board cells:"
-    tdiv:
-      for x in 0..<boardmod.BoardWidth:
-        for y in 0..<boardmod.BoardHeight:
-          let cell = board.getCell(x, y)
-          if cell.count > 0:
-            tdiv:
-              text $x & ", " & $y & ": " & $cell
+    h3(onClick = proc() =
+      debugCollapsed = not debugCollapsed
+      redraw()
+    ,):
+      text "[DEBUG]"
+    if not debugCollapsed:
+      tdiv:
+        text "movableCells: " & $movableCells
+      tdiv:
+        text "selectedPos: " & $selectedPos
+      tdiv:
+        text "mochigoma[black]: " & $board.mochigoma[black].len & "個"
+      tdiv:
+        text "mochigoma[white]: " & $board.mochigoma[white].len & "個"
+      # tdiv:
+      #   text "placableCells: " & $placableCells
+      tdiv:
+        text "selectedMochigoma: " & $selectedMochigoma
+      tdiv:
+        text "Board cells:"
+      tdiv:
+        for x in 0..<boardmod.BoardWidth:
+          for y in 0..<boardmod.BoardHeight:
+            let cell = board.getCell(x, y)
+            if cell.count > 0:
+              tdiv:
+                text $x & ", " & $y & ": " & $cell
 
 
 proc app(): VNode =
