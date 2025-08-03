@@ -4,27 +4,27 @@ import unittest
 import ../components/board
 import ../components/piece
 
-suite "Piece move tests":
+suite "Piece move tests lv 1":
   test "sui moves correctly":
     var b = initBoard()
-    b.pushPiece(0, 0, newPiece(PieceType.sui, Side.black))
-    let moves = b.getMovableCells(0, 0, 3)
-    check moves.len == 3 # (1, 0), (0, 1), (1, 1)
+    b.pushPiece(4, 4, newPiece(PieceType.sui, Side.black))
+    let moves = b.getMovableCells(4, 4, 3)
+    check moves.len == 8 # 周囲8マス
 
   test "taisho moves correctly":
     var b = initBoard()
-    b.pushPiece(1, 1, newPiece(PieceType.taisho, Side.white))
-    let moves = b.getMovableCells(1, 1, 3)
+    b.pushPiece(4, 4, newPiece(PieceType.taisho, Side.white))
+    let moves = b.getMovableCells(4, 4, 3)
     check moves.len == 20 # 周囲8マス + 横6マス + 縦6マス
   
   test "chujo moves correctly":
     var b = initBoard()
-    b.pushPiece(1, 1, newPiece(PieceType.chujo, Side.black))
-    let moves = b.getMovableCells(1, 1, 3)
-    check moves.len == 14 # 周囲8マス + 斜め6マス
+    b.pushPiece(4, 4, newPiece(PieceType.chujo, Side.black))
+    let moves = b.getMovableCells(4, 4, 3)
+    check moves.len == 20 # 周囲8マス + 斜め12マス
   
   test "shosho moves correctly":
     var b = initBoard()
-    b.pushPiece(1, 1, newPiece(PieceType.shosho, Side.black))
-    let moves = b.getMovableCells(1, 1, 3)
+    b.pushPiece(4, 4, newPiece(PieceType.shosho, Side.black))
+    let moves = b.getMovableCells(4, 4, 3)
     check moves.len == 6 # 斜め後ろを除く周囲6マス

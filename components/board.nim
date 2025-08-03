@@ -163,20 +163,23 @@ proc getMovableCells*(b: Board, x, y: int, TSUKE_MAX: int): seq[(int, int)] =
     discard
 
   # 通常の駒の動き
-  for (dx, dy) in piecerange:
-    let nx = x + dx
-    let ny = y + dy
-    if nx in 0..<BoardWidth and ny in 0..<BoardHeight:
-      # 自分の駒がいなければ移動可
-      let targetCell = b.grid[nx][ny]
-      if targetCell.count == 0:
-        result.add((nx, ny))
-      # 自分の駒があり、ツケ可能であれば移動可能
-      elif targetCell.pieces[targetCell.count-1].side == piece.side and targetCell.count < TSUKE_MAX and targetCell.pieces[targetCell.count-1].kind != sui:
-        result.add((nx, ny))
-      # 相手の駒があれば移動可能
-      elif targetCell.pieces[targetCell.count-1].side != piece.side:
-        result.add((nx, ny))
+  for vec in piecerange:
+    for (dx, dy) in vec:
+      let nx = x + dx
+      let ny = y + dy
+      if nx in 0..<BoardWidth and ny in 0..<BoardHeight:
+        # 自分の駒がいなければ移動可
+        let targetCell = b.grid[nx][ny]
+        if targetCell.count == 0:
+          result.add((nx, ny))
+        # 自分の駒があり、ツケ可能であれば移動可能
+        elif targetCell.pieces[targetCell.count-1].side == piece.side and targetCell.count < TSUKE_MAX and targetCell.pieces[targetCell.count-1].kind != sui:
+          result.add((nx, ny))
+          break  # それ以降は終了
+        # 相手の駒があれば移動可能
+        elif targetCell.pieces[targetCell.count-1].side != piece.side:
+          result.add((nx, ny))
+          break  # それ以降は終了
 
 # 持ち駒をセットする（盤外の駒をセット）
 proc placeMochigoma*(b: var Board, x, y: int, piece: PiecePtr) =
